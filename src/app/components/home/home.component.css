@@ -1,0 +1,21 @@
+.btn-detail{
+    padding: 4px;
+    border: solid 1px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.badge{
+    color: #ffffff;
+}
+.img-pokemon{
+    width: 50px;
+}
+.slc-type{
+    width: 300px;
+    height: 40px;
+    border-radius: 8px;
+}
+.btn-primary{
+    border-radius: 8px;
+}

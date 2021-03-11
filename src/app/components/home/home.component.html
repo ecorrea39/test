@@ -1,0 +1,148 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 m-auto">
+            <form [formGroup]="SearchPokemon" class="mt-5 mb-5" (ngSubmit)="onSubmitFilter()"> 
+                <div class="form-group">
+                    <label for="exampleFormControlInput1" class="form-label d-block">Filtrar por tipo:</label>
+                    <select class="form-select slc-type" aria-label="Default select " formControlName="type">
+                        <option selected>. . .</option>
+                        <option value *ngFor="let type of typePokemon" [ngValue]="type.name">{{type.name}}</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary ml-2 mb-2" [disabled]="SearchPokemon.invalid">Buscar</button>
+                </div>
+                
+            </form>
+            <form>
+                <div class="form-group form-inline">
+                    Full text search: <input class="form-control ml-2" type="text" [formControl]="filter"/>
+                </div>
+            </form>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">NAME</th>
+                      <th>ACTIONS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let pokemon of dataPokemon$ | async; index as i">
+                        <th scope="row">
+                            {{i | json}}
+                        </th>
+                        <td>
+                            <ngb-highlight [result]="pokemon.name" [term]="filter.value"></ngb-highlight>
+                        </td>
+                        <td>
+                            <button class="btn btn-detail" (click)="details(pokemon.url)">ver detalles</button>
+                        </td>
+                    </tr>
+                  </tbody>
+            </table> 
+            
+            <table datatable class="row-border hover">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Foo</td>
+                    <td>Bar</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Someone</td>
+                    <td>Youknow</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Iamout</td>
+                    <td>Ofinspiration</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>Yoda</td>
+                    <td>Skywalker</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>Patrick</td>
+                    <td>Dupont</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td>Barack</td>
+                    <td>Obama</td>
+                  </tr>
+                  <tr>
+                    <td>7</td>
+                    <td>François</td>
+                    <td>Holland</td>
+                  </tr>
+                  <tr>
+                    <td>8</td>
+                    <td>Michel</td>
+                    <td>Popo</td>
+                  </tr>
+                  <tr>
+                    <td>9</td>
+                    <td>Chuck</td>
+                    <td>Norris</td>
+                  </tr>
+                  <tr>
+                    <td>10</td>
+                    <td>Simon</td>
+                    <td>Robin</td>
+                  </tr>
+                  <tr>
+                    <td>11</td>
+                    <td>Louis</td>
+                    <td>Lin</td>
+                  </tr>
+                  <tr>
+                    <td>12</td>
+                    <td>Zelda</td>
+                    <td>Link</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+</div>
+
+<ng-template #detailModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modal-basic-title">
+          <img src="{{this.pokemonDetails.sprites.other.dream_world.front_default}}" class="img-pokemon" alt="{{this.pokemonDetails.name}}">
+          {{this.pokemonDetails.name}}
+        </h3>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-6">
+                <h5 class="text-left">Habilidades</h5>
+                <span *ngFor="let ability of pokemonDetails.abilities" class="badge bg-primary ml-4">
+                    {{ability.ability.name}}
+                </span>
+            </div>
+            <div class="col-6">
+                <h5 class="text-left">Tipo</h5>
+                <span *ngFor="let type of pokemonDetails.types" class="badge bg-success ml-4">
+                    {{type.type.name}}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="d('Cross click')">Cerrar</button>
+    </div>
+</ng-template>
